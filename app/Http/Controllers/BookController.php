@@ -8,6 +8,12 @@ use Illuminate\Validation\Validator;
 
 class BookController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -21,14 +27,14 @@ class BookController extends Controller
             return response()->json([
                 'success' => "true",
                 'data' => $book,
-                'mesasge' => 'success store book',
+                'mesasge' => 'success show all books',
                 'code' => http_response_code(200)
             ]);
         }else{
             return response()->json([
                 'success' => "false",
                 'data' => null,
-                'mesasge' => 'failed store book',
+                'mesasge' => 'failed show all books',
                 'code' => http_response_code(404)
             ]);
         }

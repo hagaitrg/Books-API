@@ -19,12 +19,19 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'v1'], function () use ($router) {
-        $router->get('book/{id}', 'BookController@show');
-        $router->get('book', 'BookController@index');
-        $router->post('book/store', 'BookController@store');
-        $router->put('book/update/{id}', 'BookController@update');
-        $router->delete('book/delete/{id}', 'BookController@destroy');
-
+        $router->group(['middleware' => 'auth'], function() use($router){
+            // Book Controllers
+            $router->get('book/{id}', 'BookController@show');
+            $router->get('book', 'BookController@index');
+            $router->post('book/store', 'BookController@store');
+            $router->put('book/update/{id}', 'BookController@update');
+            $router->delete('book/delete/{id}', 'BookController@destroy');
+            
+            // User Controllers
+            $router->get('/user/profilme', 'UserController@priflMe');
+            $router->put('/user/edit/{id}', 'UserController@editProfil');
+        });
         $router->post('user/register', 'UserController@register');
+        $router->post('user/login', 'UserController@login');
     });
 });
